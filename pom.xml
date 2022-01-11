@@ -23,7 +23,7 @@
     <url>https:/github.com/verhas/levenshtein/tree/master</url>
     <groupId>com.javax0</groupId>
     <artifactId>levenshtein</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
     <description>Reflection Tools</description>
     <dependencies>
