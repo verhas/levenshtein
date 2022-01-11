@@ -1,0 +1,68 @@
+== Levenshtein distance calculator
+{%@snip:collect from="src/main/java"%}\
+{%@snip:collect from="src/test/java"%}\
+{%@import version.jim%}
+
+Simplified and limited version of Levenshtein distance calculation.
+https://en.wikipedia.org/wiki/Levenshtein_distance[The Levenshtein distance between two words is the minimum number of single-character edits (insertions, deletions or substitutions) required to change one word into the other.]
+
+This implementation is used to create informative error message when a user mistypes a command, parameter etc.
+The use case implies that
+
+* Speed is not a primary issue, because we are in an error situation, where an error message is created to be displayed to the user.
+In a situation like that the reaction of the user is order of magnitudes larger than the speed of the program.
+
+* The compared strings are not expected to be long.
+
+* The maximum distance we are interested can be limited.
+If the distance is too large, then the suggestion in the error message would not be informative enough anyway.
+
+Thus, the calculation of the distance is limited to `MAX_COST`, fixed to the value to {%@snip MAX_COST /(\d+)/%} in the code.
+
+To use the library add the following dependency to your project.
+
+[source,xml]
+----
+<dependency>
+    <groupId>com.javax0</groupId>
+    <artifactId>levenshtein</artifactId>
+    <version>{%VERSION%}</version>
+</dependency>
+----
+
+After that add the next line to your `module-info.java` file.
+
+[source,java]
+----
+requires levenshtein;
+----
+
+If you do not have `module-info.java` file, then just forget it.
+The minimum Java version is 11.
+
+When you have that dependency you can use the library in your code.
+A sample code is the following:
+
+[source,java]
+----
+{%@snip Levenshtein_sample%}
+----
+
+This sample program from the unit test gets a few commands and a mistyped command.
+It goes through all the commands and finds the one closest to the one given by the user.
+
+
+Some examples from the unit tests:
+
+|===
+|Word 1 |Word 2 |Distance
+
+{%#replaceLines replace="""/^.*(\\d).*"(.*?)".*"(.*?)".*$/|$2
+|$3
+|$1
+
+/"""
+{%@snip Levenshtein_test%}
+%}
+|===
+
